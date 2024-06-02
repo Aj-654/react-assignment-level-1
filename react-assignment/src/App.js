@@ -6,7 +6,7 @@ import UserDetails from './components/UserDetails'
 function App() {
   return (
     <>
-      <Router>
+      <Router basename="/react-assignment-level-1">
         <Routes>
           <Route path='/' element={<Navigate to='/users' />} />
           <Route path='/users' element={<Users />} />
