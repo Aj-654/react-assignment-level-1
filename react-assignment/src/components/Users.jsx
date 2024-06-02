@@ -26,7 +26,7 @@ const Users = () => {
   }, []);
 
   
-  const filteredUsers = users.filter(
+  const filteredUsers = userinfo.filter(
     user =>
       user.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
