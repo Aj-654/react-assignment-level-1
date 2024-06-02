@@ -8,9 +8,9 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<Navigate to='/users' />} />
-          <Route path='/users' element={<Users />} />
-          <Route path='/users/:id' element={<UserDetails />} />
+          <Route path='/' element={<Navigate to='react-assignment-level-1/users' />} />
+          <Route path='/react-assignment-level-1/users' element={<Users />} />
+          <Route path='react-assignment-level-1/users/:id' element={<UserDetails />} />
         </Routes>
       </Router>
     </>
