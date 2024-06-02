@@ -4,19 +4,26 @@ import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
   const navigate = useNavigate();
-  //to navigate to users details page
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter users based on search term
+  const filteredUsers = userinfo.filter(
+    user =>
+      user.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Logic for pagination
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
   const handleClick = (id) => {
     navigate(`/users/${id}`);
   };
-  const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
-
-  // Logic for pagination
-  const totalPages = Math.ceil(userinfo.length / usersPerPage);
-
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = userinfo.slice(indexOfFirstUser, indexOfLastUser);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -30,6 +37,11 @@ const Users = () => {
     setCurrentPage((prev) => (prev === totalPages ? prev : prev + 1));
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); 
+  };
+
   const renderPageNumbers = () => {
     const pages = [];
     if (totalPages <= 6) {
@@ -38,7 +50,7 @@ const Users = () => {
           <button
             key={i}
             onClick={() => handlePageChange(i)}
-            className={`border rounded-sm px-4 py-2 mx-1 ${currentPage === i ? 'border-blue-500 text-blue-500' : 'border-gray-200'}`}
+            className={`border rounded-sm px-4 py-2 mx- ${currentPage === i ? 'border-blue-500 text-blue-500' : 'border-gray-200'}`}
           >
             {i}
           </button>
@@ -84,6 +96,18 @@ const Users = () => {
         <div>
           <h1 className='text-4xl font-semibold pb-5'>Users</h1>
         </div>
+        <form id='searchBar' className='flex items-center justify-start mb-5 w-1/3 rounded-md border'>
+          <input
+            type='text'
+            placeholder='Search by first or last name'
+            className='h-12 w-full px-4 border-none rounded-l-md focus:outline-none'
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <button type='button' className='h-12 bg-gray-200 rounded-r-md border-none overflow-hidden'>
+            <img src='assets/search.png' width={60} height={60} alt='Search' />
+          </button>
+        </form>
         <div className='rounded-md overflow-hidden'>
           <table className='w-full'>
             <thead>
@@ -93,7 +117,6 @@ const Users = () => {
                 <th className=''>Age</th>
                 <th className=''>Email</th>
                 <th className=''>Web</th>
-                
               </tr>
             </thead>
             <tbody>
@@ -107,7 +130,7 @@ const Users = () => {
                   <td className=''>{user.last_name}</td>
                   <td className=''>{user.age}</td>
                   <td className=''>{user.email}</td>
-                  <td className=' text-blue-500 underline hover:text-blue-800 hover:bg-gray-200 cursor-pointer'><a href={user.web} target='_blank' rel='noreferrer' >{user.web}</a></td>
+                  <td className=' text-blue-500 underline hover:text-blue-800 hover:bg-gray-200 cursor-pointer'><a href={user.web} target='_blank' rel='noreferrer'>{user.web}</a></td>
                 </tr>
               ))}
             </tbody>
