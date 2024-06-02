@@ -7,19 +7,28 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortColumn, setSortColumn] = useState('');
+  const [sortDirection, setSortDirection] = useState('asc');
 
-  // Filter users based on search term
+  
   const filteredUsers = userinfo.filter(
     user =>
       user.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const sortedUsers = filteredUsers.sort((a, b) => {
+    if (!sortColumn) return 0;
+    if (a[sortColumn] < b[sortColumn]) return sortDirection === 'asc' ? -1 : 1;
+    if (a[sortColumn] > b[sortColumn]) return sortDirection === 'asc' ? 1 : -1;
+    return 0;
+  });
+
   // Logic for pagination
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const totalPages = Math.ceil(sortedUsers.length / usersPerPage);
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = sortedUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   const handleClick = (id) => {
     navigate(`/users/${id}`);
@@ -39,7 +48,21 @@ const Users = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
+  };
+
+  const handleSort = (column) => {
+    const newSortDirection = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
+    setSortColumn(column);
+    setSortDirection(newSortDirection);
+  };
+
+  const renderSortIcon = (column) => {
+    if (sortColumn === column) {
+      return sortDirection === 'asc' ? '▲' : '▼';
+    } else {
+      return '⇅';
+    }
   };
 
   const renderPageNumbers = () => {
@@ -50,7 +73,7 @@ const Users = () => {
           <button
             key={i}
             onClick={() => handlePageChange(i)}
-            className={`border rounded-sm px-4 py-2 mx- ${currentPage === i ? 'border-blue-500 text-blue-500' : 'border-gray-200'}`}
+            className={`border rounded-sm px-4 py-2 mx-1 ${currentPage === i ? 'border-blue-500 text-blue-500' : 'border-gray-200'}`}
           >
             {i}
           </button>
@@ -112,11 +135,21 @@ const Users = () => {
           <table className='w-full'>
             <thead>
               <tr className='border px-5 text-left bg-gray-100'>
-                <th className='py-5 pl-2'>First Name</th>
-                <th className=''>Last Name</th>
-                <th className=''>Age</th>
-                <th className=''>Email</th>
-                <th className=''>Web</th>
+                <th className='py-5 pl-2 cursor-pointer' onClick={() => handleSort('first_name')}>
+                  First Name {renderSortIcon('first_name')}
+                </th>
+                <th className='cursor-pointer' onClick={() => handleSort('last_name')}>
+                  Last Name {renderSortIcon('last_name')}
+                </th>
+                <th className='cursor-pointer' onClick={() => handleSort('age')}>
+                  Age {renderSortIcon('age')}
+                </th>
+                <th className='cursor-pointer' onClick={() => handleSort('email')}>
+                  Email {renderSortIcon('email')}
+                </th>
+                <th className='cursor-pointer' onClick={() => handleSort('web')}>
+                  Website {renderSortIcon('web')}
+                </th>
               </tr>
             </thead>
             <tbody>
