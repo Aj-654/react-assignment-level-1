@@ -16,7 +16,7 @@ const UserDetails = () => {
     }
   
     return (
-      <div className='bg-neutral-100 py-10'>
+      <div className='bg-neutral-100 py-10 px-10'>
         <div className='flex justify-center flex-col px-7 py-6 shadow-xl mx-auto max-w-[800px] bg-white'>
           <div className='flex flex-row justify-start items-center pb-5'>
             <button className=''>
