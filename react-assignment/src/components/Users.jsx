@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { userinfo } from '../constants';
 import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
