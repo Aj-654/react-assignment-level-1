@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { userinfo } from '../constants';
 
 const UserDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const user = userinfo.find(user => user.id === id);
+    const [user, setUser] = useState(null);
 
-    
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const response = await fetch('https://react-assg1-backend.vercel.app/users');
+          const data = await response.json();
+          const userData = data.find(user => user.id === parseInt(id));
+          setUser(userData);
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        }
+      };
+  
+      fetchUser();
+    }, [id]);
 
     const handleClick = () => {
       navigate('/')
     };
   
     if (!user) {
-      return <div>User not found</div>;
+      return <div className='p-10'>Loading...</div>;
     }
   
     return (

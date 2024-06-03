@@ -9,8 +9,24 @@ const Users = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortColumn, setSortColumn] = useState('');
   const [sortDirection, setSortDirection] = useState('asc');
+  const [users, setUsers] = useState([]);
 
-  const filteredUsers = userinfo.filter(
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('https://react-assg1-backend.vercel.app/users');
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  
+  const filteredUsers = users.filter(
     user =>
       user.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
