@@ -4,22 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const UserDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [user, setUser] = useState(null);
+    const user = userinfo.find(user => user.id === id);
 
-    useEffect(() => {
-      const fetchUser = async () => {
-        try {
-          const response = await fetch('https://cors-anywhere.herokuapp.com/https://d2k-static-assets.s3.ap-south-1.amazonaws.com/assignment-files/python-backend-assignment/users.json');
-          const data = await response.json();
-          const userData = data.find(user => user.id === parseInt(id));
-          setUser(userData);
-        } catch (error) {
-          console.error('Error fetching user:', error);
-        }
-      };
-  
-      fetchUser();
-    }, [id]);
+    
 
     const handleClick = () => {
       navigate('/')
