@@ -7,14 +7,14 @@ Created a react application which provides following functionalities:
 - sort columns of table
 - pagination of users list
 - detail page for each user on a separate route
-- 
+
 **Task Overview**
 Followed all instructions to create the required application. I strictly followed the wireframes and guidelines given for the UI and functionalities.
 
 ## API endpoint used:
 _[User Data](https://d2k-static-assets.s3.ap-south-1.amazonaws.com/assignment-files/python-backend-assignment/users.json)_
 I used express to create a server side code which fetches the data from the API. this was required as we cannot directly fetch data in the frontend due to CORS.
-I deployed the backend code on vercel
+I deployed the backend code on vercel. However this resulted in the app being a bit slow.
 Repository: https://github.com/Aj-654/-react-assg1-backend
 backend hosted URL: react-assg1-backend.vercel.app/users
 
