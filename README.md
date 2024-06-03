@@ -15,6 +15,11 @@ Followed all instructions to create the required application. I strictly followe
 _[User Data](https://d2k-static-assets.s3.ap-south-1.amazonaws.com/assignment-files/python-backend-assignment/users.json)_
 I made use of CORS anywhere proxy to access the api as the endpoint did not allow CORS requests.
 
+However, proxies don't work on deployed applications.
+Hence, I stored the data from the api in a constants file.
+
+another approach is that we can create a server side code using express in order to pass the CORS issue. you can find the code for this in https://github.com/Aj-654/react-assignment-level-1/tree/feature/issue-4
+
 
 ## **Instructions**
 - npm install to install node modules
