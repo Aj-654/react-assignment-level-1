@@ -94,6 +94,15 @@ const Users = () => {
         );
       }
     } else {
+      pages.push(
+        <button
+          key={1}
+          onClick={() => handlePageChange(1)}
+          className={`border rounded-sm px-4 py-2 mx-1 ${currentPage === 1 ? 'border-blue-500 text-blue-500' : 'border-gray-200'}`}
+        >
+          1
+        </button>
+      );
       let startPage = Math.max(2, currentPage - 2);
       let endPage = Math.min(totalPages - 1, currentPage + 2);
 
@@ -128,8 +137,8 @@ const Users = () => {
   };
 
   return (
-    <div className='bg-neutral-100 py-10'>
-      <div className='flex justify-center flex-col px-7 py-6 shadow-xl mx-auto max-w-[1280px] bg-white'>
+    <div className='bg-neutral-100 py-10 px-5'>
+      <div className='flex justify-center flex-col px-7 py-6 mx-auto max-w-[1280px] bg-white'>
         <div>
           <h1 className='text-4xl font-semibold pb-5'>Users</h1>
         </div>
@@ -145,11 +154,11 @@ const Users = () => {
             <img src='assets/search.png' width={60} height={60} alt='Search' />
           </button>
         </form>
-        <div className='rounded-md overflow-hidden'>
+        <div className='rounded-md overflow-auto'>
           <table className='w-full'>
             <thead>
-              <tr className='border px-5 text-left bg-gray-100'>
-                <th className='py-5 pl-2 cursor-pointer' onClick={() => handleSort('first_name')}>
+              <tr className=' px-5 text-left bg-gray-100'>
+                <th className='py-5 cursor-pointer' onClick={() => handleSort('first_name')}>
                   First Name {renderSortIcon('first_name')}
                 </th>
                 <th className='cursor-pointer' onClick={() => handleSort('last_name')}>
@@ -168,7 +177,7 @@ const Users = () => {
             </thead>
             <tbody>
               {currentUsers.map((user) => (
-                <tr key={user.id} className='border'>
+                <tr key={user.id} className='border-b'>
                   <td 
                     onClick={() => handleClick(user.id)} 
                     className='pl-2 py-4 hover:bg-gray-100 transition-colors duration-300 cursor-pointer'>

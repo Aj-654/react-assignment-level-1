@@ -6,4 +6,16 @@
     body {
         @apply bg-neutral-100
     }
+
+    th {
+        @apply pl-4 max-md:border border-gray-300
+    }
+
+    td {
+        @apply pl-4 max-md:border border-gray-300
+    }
+
+    p {
+        @apply py-3 border-b break-words
+    }
 }
